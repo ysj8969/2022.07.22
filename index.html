@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script> 
+	<script src="js/common.Header.js"></script>
+	<script src="js/Banner.js"></script>
+	<script src="js/Best.js"></script>
+	<script src="js/Slider.js"></script>
+	<script src="js/New.js"></script>
+	<script src="js/Only.js"></script>
+	<script src="js/Today.js"></script>
+	<script src="js/Other.js"></script>
+	<script src="js/JsonBest.js"></script>
+	<script src="js/JsonNew.js"></script>
+	<script src="js/JsonRecom.js"></script>  
+
+	<title>교보문고</title>
+	<style>
+		* {margin:0; box-sizing:border-box;}
+		ul, ol, li {list-style:none; margin:0; padding:0;}
+		a {text-decoration:none;}
+
+		#wrap {width:100%; height:auto;}
+		#wrap .contents_box {width:1150px; height:100%; margin: 0 auto;}
+
+		header {width:100%; height:auto; }
+		header > #header_banner {width:100%; height:80px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		header > #header_banner > span:first-of-type {width:50%; height:100%; background-color:#ffe5d8;}
+		header > #header_banner > span:last-of-type {width:50%; height:100%; background-color:#e3f5f5; line-height:80px;}
+		header > #header_banner > span > i {width:15px; height:15px; font-size:13px; border:1px solid #000; line-height:15px; text-align:center; cursor:pointer;}
+
+		header > #header_util {width:100%; height:30px; background-color:#f8f8f8; position:relative; z-index:2;}
+		header > #header_util > .contents_box {display:flex; flex-direction:row; justify-content:space-between;}
+		header > #header_util > .contents_box > #header_util_nav {font-size:12px; line-height:30px; height:30px;}
+		header > #header_util > .contents_box > #header_util_nav > li {float:left;  cursor:pointer; position:relative; margin:0 5px 0 0px;}
+		header > #header_util > .contents_box > #header_util_nav > li > a {display:block; padding:0 7.5px; height:100%; color:#000;}
+		header > #header_util > .contents_box > #header_util_nav > li > a > i {color:#666; padding:0 0 0 5px;}
+		header > #header_util > .contents_box > #header_util_nav > li:hover > a {background-color:#fff; border:1px solid #ccc;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store {position:absolute; top:30px; left:0 ;width:603px; border:1px solid #ccc; border-top:none; display:none;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li {float:left; line-height:30px; width:200.2px; height:auto; background-color:#ddd; cursor:default; position:relative; border-right:1px solid #ccc;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li:last-child {border:none;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li > span {padding:0 0 0 10px;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li > ul {height:350px; width:100%; background-color:#f8f8f8; position:relative; z-index:1;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li > ul > li {width:100%; padding:0 0 0 10px; cursor:pointer;}
+
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li > ul > li:hover {background-color:#ddd;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_store > li > ul > li > a {color:#000;}
+
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_benefit {position:absolute; top:30px; left:0px; width:150px; line-height:30px; height:165px; background-color:#f8f8f8; padding:5px 0; border:1px solid #ccc; border-top:none; display:none; z-index:1;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_benefit > li {padding:0 0 0 10px;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_benefit > li > a {color:#000;}
+		header > #header_util > .contents_box > #header_util_nav > li > #header_util_nav_benefit > li:hover {background-color:#ddd;}
+
+
+		header > #header_util > .contents_box > #header_util_main {font-size:12px; line-height:30px; height:30px;}
+		header > #header_util > .contents_box > #header_util_main > li {float:left; padding:0 0 0 15px;}
+		header > #header_util > .contents_box > #header_util_main > li > a {color:#000; display:block;}
+		header > #header_util > .contents_box > #header_util_main > li > a > i {font-size:14px; position:relative;}
+		header > #header_util > .contents_box > #header_util_main > li > a > i > span {font-size:12px; position:absolute; top:-5px; left:12px; width:12px; line-height:12px; height:12px; background-color:red; border-radius:50%; text-align:center; color:#fff;}
+
+		header > #header_search {width:100%; height:100px; }
+		header > #header_search > .contents_box {display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		header > #header_search > .contents_box > #header_search_logo  {width:180px; height:50px; }
+		header > #header_search > .contents_box > #header_search_logo > a > img {width:100%; height:100%;}
+		header > #header_search > .contents_box > #header_search_box {width:450px; height:40px; border:1px solid #5e6b9e; display:flex; flex-direction:row; justify-content:space-between;}
+		header > #header_search > .contents_box > #header_search_box > input {width:450px; height:100%; font-size:12px; padding:5px 15px; background-color:#f8f8f8; border:none; font-weight:bold; color:#666;}
+		header > #header_search > .contents_box > #header_search_box > input > img {display:block; width:50px; height:50px;}
+		header > #header_search > .contents_box > #header_search_ad {width:200px; height:80px;}
+		header > #header_search > .contents_box > #header_search_ad > img {width:100%; height:65px;}
+		header > #header_search > .contents_box > #header_search_ad > img:not(:first-child) {display:none;}
+		header > #header_search > .contents_box > #header_search_ad > i {width:15px; height:15px; border:1px solid #aaa; font-size:10px; text-align:center; line-height:15px; color:#aaa; float:right; cursor:pointer;}
+		header > #header_search > .contents_box > #header_search_ad > span {float:right; font-size:11px; margin:0 10px 0 0px;}
+
+
+
+		header > nav {width:100%; height:60px; background-color:#5e6b9e}
+		header > nav > .contents_box {position:relative;}
+		header > nav > .contents_box > #header_nav_main {width:auto; height:100%; line-height:60px; display:block; float:left; font-weight:bold;}
+		header > nav > .contents_box > #header_nav_main > li {float:left; font-size:14px; width:85px; height:100%; position:relative; text-align:center;}
+		header > nav > .contents_box > #header_nav_main > li > i {font-size:20px; width:60px; text-align:center; line-height:60px; height:100%; background-color:#353f67; display:block; cursor:pointer; color:#fff;}
+		header > nav > .contents_box > #header_nav_main > li > a {color:#fff; display:block;}
+		header > nav > .contents_box > #header_nav_main > li > a > i {font-size:13px; padding:0 0 0 2px;}
+		header > nav > .contents_box > #header_nav_main > li:last-child > a > i {font-size:20px; line-height:60px;}        
+
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub:hover {background-color:#fff; color:#5e6b9e;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub:hover > a {color:#5e6b9e; border:2px solid #353f67; border-bottom:none;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub > a > .fa-chevron-up {display:none;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub:hover > a > .fa-chevron-down {display:none;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub:hover > a > .fa-chevron-up {display:inline-block;}
+
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub > .header_nav_main_submenu {width:85px; height:auto; position:absolute; top:60px; font-size:12px; line-height:25px; border:2px solid #353f67; border-top:none; text-align:left; font-weight:500; display:none; background-color:#fff; z-index:1;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub > .header_nav_main_submenu > li > a {color:#000; display:block; padding:0 0 0 5px; margin:2px 0px;}
+		header > nav > .contents_box > #header_nav_main > .header_nav_main_sub > .header_nav_main_submenu > li:hover {background-color:#eee;}
+
+		header > nav > .contents_box > #header_nav_main_toggle {width:auto; line-height:60px; display:none; float:left; z-index:1; position:relative;}
+		header > nav > .contents_box > #header_nav_main_toggle > li {float:left; font-size:14px; height:60px; color:#fff; display:block; height:100%; padding:0 15px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li:first-child {padding:0; position:relative;}
+		header > nav > .contents_box > #header_nav_main_toggle > li:first-child > i {font-size:20px; width:60px; text-align:center; line-height:60px; height:100%; background-color:#353f67; display:block; cursor:pointer; color:#fff;}
+		header > nav > .contents_box > #header_nav_main_toggle > li:last-child {color:#ddd; cursor:pointer;}
+		header > nav > .contents_box > #header_nav_main_toggle > li:last-child > i {font-size:13px; padding:0 0 0 2px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul {position:absolute; top:60px; left:0; color:#000; width:165px; line-height:45px; border:1px solid #000; border-top:none; height:415px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul:hover {border-right:1px solid #ccc;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li {padding:0 0 0 10px; background-color:#f8f8f8;  border-bottom:1px solid #ccc; width:100%; font-weight:600;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li:last-child {border:none;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li:hover {background-color:#353f67; color:#fff; text-decoration:underline; font-size:14px;}
+
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap {width:auto; height:auto; display:none;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box {position:absolute; top:0; left:163px; width:auto; height:auto; border:1; display:flex; flex-direction:row; justify-content:flex-start; align-items:flex-start; background-color:#f8f8f8; border:1px solid #000; border-left:none; border-top:none;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > .header_nav_main_toggle_menu1 {width:390px; height:414px; border-left:1px solid #ccc;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > .header_nav_main_toggle_menu2 {width:150px; height:414px; border-left:1px solid #ccc}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > h6 {padding:0 0 0 10px; font-size:13px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li:hover > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div> h6 {color:#000;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul {float:left; padding:0 0 0 10px; line-height:25px; font-size:12px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul > li {width:119px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul > li > a {color:#666; font-size:11px;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul > li > a:hover {text-decoration:underline;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul > li > .header_nav_main_toggle_red {color:red;}
+		header > nav > .contents_box > #header_nav_main_toggle > li > ul > li > .header_nav_main_toggle_wrap > .header_nav_main_toggle_box > div > ul > li > a > .header_nav_main_toggle_new {display:inline-block; width:12px; height:12px; line-height:11px; text-align:center; font-weight:bold; background-color:orange; color:#fff; border-radius:3px; margin:0 0 0 2px;}
+
+
+		header > nav > .contents_box > #header_nav_sub {width:auto; height:100%; line-height:60px; float:right;}
+		header > nav > .contents_box > #header_nav_sub > li {float:left; font-size:13px; height:100%;}
+		header > nav > .contents_box > #header_nav_sub > li > a {color:#ddd; display:block; height:100%; padding:0 5px;}
+		header > nav > .contents_box > #header_nav_sub > li > a:hover {text-decoration:underline; color:#fff;}
+
+		#slider {width:100%; height:430px; padding:25px 0px; background-color:#e4f1d3;}
+		#slider > .contents_box > #slider_main {width:812px; height:330px; float:left;}
+		#slider > .contents_box > #slider_main > .slider_main_1box {width:100%; height:100%;}
+		#slider > .contents_box > #slider_main > .slider_main_1box > img {width:100%; height:100%;}
+		#slider > .contents_box > #slider_main > .slider_main_3box {width:100%; height:100%; display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		#slider > .contents_box > #slider_main > .slider_main_3box > img {width:32%; height:100%; border-right:1.5px solid #ddd;}
+		#slider > .contents_box > #slider_main > .slider_main_3box > img:last-child {border:none;}
+		#slider > .contents_box > #slider_main > div:not(:first-child) {display:none;}
+
+		#slider > .contents_box > #slider_side {width:300px; border:1px solid #ccc; height:380px; float:right; padding:10px; background-color:#fff;}
+		#slider > .contents_box > #slider_side > #slider_side_top {display:flex; flex-direction:column; justify-content:space-around; align-items:center; text-align:center; width:100%; height:280px; cursor:pointer;}
+		#slider > .contents_box > #slider_side > #slider_side_top > h5 {font-size:18px;}
+		#slider > .contents_box > #slider_side > #slider_side_top > span {font-size:13px; font-weight:bold; color:gray;}
+		#slider > .contents_box > #slider_side > #slider_side_top > #slider_side_img {width:100%; height:150px; background-image:url(img/bookc.jpg); background-size:cover; background-position:center;}
+		#slider > .contents_box > #slider_side > #slider_side_top > p:first-of-type {font-size:13px; font-weight:bold;}
+		#slider > .contents_box > #slider_side > #slider_side_top > p:last-of-type {font-size:13px;}
+		#slider > .contents_box > #slider_side > #slider_side_top:hover > p:first-of-type {text-decoration:underline;}
+
+		#slider > .contents_box > #slider_side > #slider_side_bot {width:100%; height:80px; border-top:1px solid #ccc; padding:10px 0px 0 20px;;}
+		#slider > .contents_box > #slider_side > #slider_side_bot > ul > {width:100%; height:100%; padding:0 10px;}
+		#slider > .contents_box > #slider_side > #slider_side_bot > ul > li {list-style:initial; font-size:12px; margin:1px 0px;}
+		#slider > .contents_box > #slider_side > #slider_side_bot > ul > li > a {color:#000;}
+		#slider > .contents_box > #slider_side > #slider_side_bot > ul > li > a:hover {text-decoration:underline;}
+
+		#slider > .contents_box > #slider_btn {width:812px; height:40px; float:left;}
+		#slider > .contents_box > #slider_btn > ul {width:100%; height:100%; line-height:40px; border:1px solid #ccc; margin:10px 0 0 0px;  overflow:hidden; box-sizing:content-box; font-weight:bold; background-color:#fff;}
+		#slider > .contents_box > #slider_btn > ul > li {float:left; width:135.33px; text-align:center; border-right:1px solid #ccc; cursor:pointer;}
+		#slider > .contents_box > #slider_btn > ul > li:last-child {border:none;}
+		#slider > .contents_box > #slider_btn > ul > .slider_btn_hover{border-top:1.5px solid #353f67; background-color:#5e6b9e; color:#fff;}
+
+
+
+		section {width:100%; height:auto;}
+		.contents_title {width:100%; height:50px; display:flex; flex-direction:row; justify-content:flex-start; align-items:center; position:relative;}
+		.contents_title > h2 {font-size:16px; cursor:default; color:#000; margin:0 20px 0 0px;}
+		.contents_title > ul {width:auto; line-height:30px; height:50px; display:flex; flex-direction:row; justify-content:flex-start; align-items:center; position:relative;}
+		.contents_title > ul > h2:hover {color:#5e6b9e; text-decoration:underline; cursor:pointer;}
+		.contents_title > ul > li {float:left; font-size:13px; padding:0 7.5px; margin:0 5px; display:block; cursor:pointer; font-weight:bold; color:#666;}
+		.contents_title > ul > li:first-of-type {background-color:#5e6b9e; color:#fff;}
+		.contents_title > i {font-size:15px; color:#ccc; cursor:pointer; font-weight:100; position:absolute; right:0;}
+
+		section > #today {width:100%; height:400px; margin:50px 0px;}
+		section > #today > .contents_box {display:flex; flex-direction:row; justify-content:space-between; align-items:center; position:relative;}
+		section > #today > .contents_box > #today_contents {width:800px; height:370px; display:flex; flex-direction:column; justify-content:space-between; align-items:center;}
+		section > #today > .contents_box > #today_contents > .contents_title {width:100%; height:25px; display:flex; flex-direction:row; justify-content:flex-start; align-items:center;}
+		section > #today > .contents_box > #today_contents > .contents_title > ul {width:auto; line-height:25px; height:25px; display:flex; flex-direction:row; justify-content:flex-start; align-items:center;}
+		section > #today > .contents_box > #today_contents > .contents_title > ul > h2 {font-size:16px; cursor:default; color:#000;}
+		section > #today > .contents_box > #today_contents > .contents_title > ul > h2:hover {color:#5e6b9e; text-decoration:underline; cursor:pointer;}
+		section > #today > .contents_box > #today_contents > .contents_title > ul > li {float:left; font-size:13px; padding:0 7.5px; margin:0 5px; display:block; cursor:pointer; font-weight:bold; color:#666;}
+		section > #today > .contents_box > #today_contents > .contents_title > ul > li:first-of-type {background-color:#5e6b9e; color:#fff;}
+
+
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap {width:100%; height:auto; border:1px solid #5e6b9e;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox {width:100%; height:330px; position:relative;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img {width:48%; height:100%; background-color:#f8f8f8; position:relative; float:left;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > img {cursor:pointer;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_type1 {width:120px; height:175px; position:absolute; top:50px; left:50%; transform:translateX(-50%); z-index:1;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_type2 {width:100px; height:145px;position:absolute; top:70px; left:20%; z-index:0; opacity:0.5;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_type3 {width:90px; height:135px; position:absolute; top:70px; right:20%; z-index:0; opacity:0.5;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_btn {position:absolute; bottom:20%; left:50%; transform:translateX(-50%);}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_btn > li {float:left; width:10px; height:10px; border:1px solid #000; border-radius:50%; margin:0 2px; cursor:pointer; background-color:#f8f8f8;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_img > .today_bookbox_img_btn > li:first-of-type {background-color:#000;}        
+
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox {width:52%; height:100%; position:relative; float:right;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro {width:100%; height:100%; position:absolute; top:0; left:0;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > img {width:100%; height:100%; position:absolute; top:0; left:0;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > img:not(:first-child) {display:none;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro:not(:first-child) {display:none;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > span {position:absolute; top:50%; transform:translateY(-50%); padding:0 10px; height:30px; line-height:30px; background-color:rgba(0, 0, 0, 0.4); color:#fff; font-size:12px; cursor:pointer;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_introbox_prev {left:0;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_introbox_next {right:0;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > span:hover {background-color:rgba(0, 0, 0, 0.7);}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > div:not(:first-of-type) {display:none;}
+
+
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle {position:absolute; bottom:0; right:0; background-color:#5e6b9e80; width:800px; height:50px; line-height:50px; color:#fff;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div {width:100%; height:100%;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div > span:first-of-type {font-size:15px; font-weight:bold; margin:0 0 0 15px;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div > span:first-of-type:hover {text-decoration:underline; cursor:pointer;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div > span:first-of-type > span {font-size:13px; margin:0 15px; font-weight:500;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div > span:last-of-type {float:right; font-size:14px; margin:0 15px 0 0px;}
+		section > #today > .contents_box > #today_contents > #today_bookbox_wrap > .today_bookbox > .today_bookbox_introbox > .today_bookbox_intro > .today_bookbox_subtitle > div > span:last-of-type  > i {cursor:pointer; padding:5px;}
+
+		section > #today > .contents_box > #today_ad {width:300px; height:330px; margin:40px 0 0 0px; border:1px solid #ccc;}
+		section > #today > .contents_box > #today_ad > #today_ad_top {width:100%; height:220px;}
+		section > #today > .contents_box > #today_ad > #today_ad_top > img {width:100%; height:100%;}
+		section > #today > .contents_box > #today_ad > #today_ad_bot {width:100%; height:108px; border-top:1px solid #ccc;}
+		section > #today > .contents_box > #today_ad > #today_ad_bot > img {width:100%; height:100%;}
+
+		section > #today > .contents_box > #side_menu {width:100px; height:550px; position:absolute; top:53px; left:-120px; border:1px solid #ccc; display:flex; flex-direction:column; justify-content:space-around; align-items:center;}
+		section > #today > .contents_box > #side_menu >.side_menu_img {width:100%; height:25%; border-bottom:1px solid #ccc; text-align:center; display:flex; flex-direction:row; justify-content:center; align-items:center; cursor:pointer;}
+		section > #today > .contents_box > #side_menu >.side_menu_img:last-of-type {border:none;}
+		section > #today > .contents_box > #side_menu >.side_menu_img > img {width:80px; height:auto; display:block;}
+		section > #today > .contents_box > #side_menu > i {position:absolute; bottom:-40px; font-size:25px; color:#5e6b9e; cursor:pointer;}
+
+
+		section > #new {width:100%; height:400px; margin:50px 0px;}
+		section > #new > .contents_box {position:relative;}
+		section > #new > .contents_box > .new_contents_wrap {width:100%; height:350px;}
+		section > #new > .contents_box > .new_contents_wrap:not(:nth-child(2)) {display:none;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box {width:1150px; height:100%; }
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box:not(:first-of-type) {display:none;}
+
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div {width:253px; height:100%; border:1px solid #ccc; padding:30px; text-align:center; float:left; margin:0 46px 0 0px; cursor:pointer;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div:last-of-type {margin:0;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > a > img {width:130px; border:1px solid #ccc; box-shadow:4px 4px 4px #ccc;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > h3 {font-size:13px; margin:10px 0px 5px;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > h3 > a {color:#000;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > h6 {font-size:12px; margin:0px 0px 15px; color:#333;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > p {font-size:2px;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div > p > a {color:#666;}
+		section > #new > .contents_box > .new_contents_wrap > .new_contents_box > div:hover > h3 > a {text-decoration:underline;}
+
+		section > #new > .contents_box > .new_contents_wrap > span {position:absolute; top:50%; transform:translateY(-50%); font-size:25px; background-color:rgba(0, 0, 0, 0.2); color:#fff; padding:0 10px; line-height:40px; height:40px; cursor:pointer; display:none; z-index:1;}
+		section > #new > .contents_box > .new_contents_wrap > span:hover {background-color:rgba(0, 0, 0, 0.8);}
+		section > #new > .contents_box > .new_contents_wrap >.new_contents_prev {left:0;}
+		section > #new > .contents_box > .new_contents_wrap >.new_contents_next {right:0;}
+		section > #new > .contents_box > .new_contents_wrap:hover > span {display:block;}
+
+
+
+		section > #only {width:100%; height:160px; margin:50px 0px;}
+		section > #only > .contents_box > #only_logo {width:150px; height:100%; display:flex; flex-direction:row; justify-content:center; align-items:center; border-top:1px solid #ccc; border-bottom:1px solid #ccc; float:left;}
+		section > #only > .contents_box > #only_logo > img {width:80px; height:50px;}
+		section > #only > .contents_box > #only_icon_wrap {width:950px; height:100%; float:right; overflow:hidden; position:relative;}
+		section > #only > .contents_box > #only_icon_wrap > .only_icon {width:5700px; height:100%; float:left;}
+		section > #only > .contents_box > #only_icon_wrap > .only_icon > .only_iconbox {width:950px; height:100%; display:flex; flex-direction:row; justify-content:space-evenly; align-items:center; float:left;}
+		section > #only > .contents_box > #only_icon_wrap > .only_icon > .only_iconbox > img {width:120px; height:100px; margin:0 10px; opacity:0.5; transition:all 0.2s; cursor:pointer;}
+		section > #only > .contents_box > #only_icon_wrap > .only_icon > .only_iconbox > img:hover {transform:translateY(-15%); opacity:1;}
+		section > #only > .contents_box > #only_icon_wrap > i {position:absolute; top:50%; transform:translateY(-50%);font-size:30px; color:#eee; cursor:pointer;}
+		section > #only > .contents_box > #only_icon_wrap > i:hover {color:#999;}
+		section > #only > .contents_box > #only_icon_wrap > #only_prev {left:0;}
+		section > #only > .contents_box > #only_icon_wrap > #only_next {right:0;}
+
+
+		section > #section_banner {width:100%; height:335px; background-color:#f3f3f3; margin:30px 0px;}
+		section > #section_banner > .contents_box > img {margin:110px 0px; float:left;}
+		section > #section_banner > .contents_box > #banner_ad_wrap {width:1000px; height:100%; float:right; overflow:hidden; position:relative;}
+		section > #section_banner > .contents_box > #banner_ad_wrap > #banner_ad {width:4000px; height:100%;}
+		section > #section_banner > .contents_box > #banner_ad_wrap > #banner_ad > img {width:1000px; height:100%; float:left;}
+
+		section > #section_banner > .contents_box > #banner_ad_wrap > i {position:absolute; top:50%; transform:translateY(-50%); font-size:20px; color:#fff; cursor:pointer; width:30px; height:30px; line-height:30px; background-color:rgba(0, 0, 0, 0.2); text-align:center; display:none;}
+		section > #section_banner > .contents_box > #banner_ad_wrap > i:hover {background-color:rgba(0, 0, 0, 0.7);}
+		section > #section_banner > .contents_box > #banner_ad_wrap > #banner_prev {left:0;}
+		section > #section_banner > .contents_box > #banner_ad_wrap > #banner_next {right:0;}
+		section > #section_banner > .contents_box > #banner_ad_wrap:hover > i {display:block;}
+
+
+		section > #story {width:100%; height:350px; margin:50px 0px;}
+		section > #story > .contents_box {display:flex; flex-flow:row wrap; justify-content:space-between; align-items:center;}
+		section > #story > .contents_box > h2 {width:100%; font-size:16px; height:50px; line-height:50px;}
+		section > #story > .contents_box > .story_contents {width:22%; height:300px; cursor:pointer}
+		section > #story > .contents_box > .story_contents > .story_imgbox {width:100%; height:250px; border-radius:50%; overflow:hidden; position:relative; border:1px solid #ccc; box-shadow:4px 4px 4px #ccc;}
+		section > #story > .contents_box > .story_contents > .story_imgbox > img {width:100%; height:100%; transition:all 0.3s;}
+		section > #story > .contents_box > .story_contents > .story_imgbox:hover > img {transform:scale(1.1);}
+		section > #story > .contents_box > .story_contents > .story_imgbox > .story_textbox {width:100%; height:65px; position:absolute; bottom:0; left:0; background-color:rgba(0, 0, 0, 0.7); text-align:center; line-height:60px; color:#fff;}
+		section > #story > .contents_box > .story_contents > span {display:block; text-align:center;}
+		section > #story > .contents_box > .story_contents > span:first-of-type {font-size:14px; padding:5px 0; font-weight:bold;}
+		section > #story > .contents_box > .story_contents > span:last-of-type {font-size:12px; color:#666;}
+		section > #story > .contents_box > .story_contents:hover > span {text-decoration:underline;}
+
+		section > #best {width:100%; height:670px; background-image:url(img/best_bg.gif); padding:50px 0px;  margin:50px 0px;}
+		section > #best > .contents_box {display:flex; flex-direction:row; justify-content:space-between; align-items:flex-end;}
+		section > #best > .contents_box > #best_main {width:900px; height:570px; display:flex; flex-direction:column; justify-content:space-between; align-items:center;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap {width:100%; height:520px; border:1px solid #000; background-color:#fff;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap:not(:nth-of-type(2)){display:none;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book {width:100%; height:100%; display:flex; flex-wrap:wrap; justify-content:space-between; align-content:space-between; position:relative;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox {width:18%; height:50%;  position:relative; padding:10px; text-align:center;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox > span {position:absolute; border-radius:50%; color:#666; z-index:1; font-size:16px; line-height:35px; top:10px; left:15px; font-weight:bold;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox > a > img {width:70%; height:130px; box-shadow:4px 4px 4px #999; margin:30px 0px 10px; border:1px solid #ccc;}
+
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox > h3 > a {font-size:12px; color:#000;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox:hover > h3 > a {text-decoration:underline;}
+		section > #best > .contents_box > #best_main > .best_main_book_wrap > .best_main_book > .best_main_bookbox > h6 {color:#666; margin:5px 0 0 0px;}
+
+		section > #best > .contents_box > #best_side {width:230px; height:520px; background-color:#fff;}
+		section > #best > .contents_box > #best_side > ul {width:100%; height:45px; line-height:45px; text-align:center; font-size:13px;}
+		section > #best > .contents_box > #best_side > ul > li {float:left; width:50%; height:100%; background-color:#ccc; cursor:pointer; color:#000; font-weight:500; border-bottom:1px solid #353f67;}
+		section > #best > .contents_box > #best_side > ul > .best_side_hover {background-color:#353f67; color:#fff;}
+		section > #best > .contents_box > #best_side > .best_side_wrap {width:100%; height:475px;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div {width:100%; height:475px; text-align:center; display:flex; flex-direction:column; justify-content:space-evenly; align-items:center;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div > div {width:100%; height:45%; display:flex; flex-direction:column; justify-content:space-around; align-items:center; cursor:pointer;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div > .best_side_top > span {display:block; font-size:13px;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div > .best_side_top > span:last-of-type {font-size:12px; color:#666;}
+		section > #best > .contents_box > #best_side > .best_side_wrap:first-of-type > div > .best_side_top > img {width:150px; height:150px;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div  img {width:100px; height:150px; border:1px solid #ccc; box-shadow:4px 4px 4px #ccc;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div   a{font-size:13px; color:#000;}
+		section > #best > .contents_box > #best_side > .best_side_wrap > div > span {width:50px; height:5px; background-color:#666;}
+
+		section > #best > .contents_box > #best_side > .best_side_wrap:last-of-type {display:none;}
+
+
+		section > #recom {width:100%; height:410px; margin:50px 0px;}
+		section > #recom > .contents_box > h2 {width:100%; height:50px; line-height:50px;  font-size:16px;}
+		section > #recom > .contents_box > #recom_main {width:255px; height:360px; float:left; padding:12.5px 40px; background-color:#f9f9f9; border:5px solid #e3e3e4;}
+		section > #recom > .contents_box > #recom_main > div {width:160px; height:90%; margin:0 auto;}
+		section > #recom > .contents_box > #recom_other {width:850px; height:360px; border:1px solid #ccc;float:right; padding:15px 42.5px; display:flex; flex-flow:row wrap; justify-content:space-between; align-items:flex-start;}
+		section > #recom > .contents_box > #recom_other > div {width:160px; height:90%; }
+		section > #recom > .contents_box > div > h3 {font-size:15px; width:100%; height:10%;}
+		section > #recom > .contents_box > div > div {display:flex; flex-direction:column; justify-content:space-between; align-items:center;}
+		section > #recom > .contents_box > div > div > a > img {width:160px; box-shadow:4px 4px 4px #999; border:1px solid #ccc;}
+		section > #recom > .contents_box > div > div > h4 > a {font-size:14px; color:#000;}
+		section > #recom > .contents_box > div > div > h6 {color:#666;}
+		section > #recom > .contents_box > div > div:hover > h4 > a {text-decoration:underline;}
+
+		section > #other {width:100%; height:350px; margin:50px 0px;}
+		section > #other > .contents_box {display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;}
+		section > #other > .contents_box > #other_title {width:100%; height:50px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		section > #other > .contents_box > #other_title > h2 {width:100px; height:50px; line-height:50px;  font-size:16px;}
+		section > #other > .contents_box > #other_title > ul > {width:100px; height:20px; line-height:10px;}
+		section > #other > .contents_box > #other_title > ul > li {width:10px; height:10px; border:4px solid #ccc; border-radius:50%; float:left; margin:0 2px; cursor:pointer;}
+		section > #other > .contents_box > #other_title > ul > .other_hover {background-color:#5e6b9e; border:none;}
+
+		section > #other > .contents_box > .other_product_wrap {width:100%; height:300px;}
+		section > #other > .contents_box > .other_product_wrap > .other_product {width:100%; height:100%;  display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div {width:22%; height:100%; text-align:center; cursor:pointer;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div > .other_imgbox {width:100%; height:253px; position:relative; border:1px solid #ccc; box-shadow:4px 4px 4px #ccc;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div > .other_imgbox > img {width:100%; height:100%;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div > .other_imgbox > span {position:absolute; bottom:0; left:0; background-color:rgba(255, 255, 255, 0.5); text-align:center; font-size:13px; width:100%; height:50px; line-height:50px; font-weight:bold;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div > span {width:100%; height:47px; font-size:13px; font-weight:bold; display:block; padding:13px 0px 0px;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div > span > span {font-weight:500;}
+		section > #other > .contents_box > .other_product_wrap > .other_product > div:hover > span {text-decoration:underline;}
+		section > #other > .contents_box > .other_product_wrap:not(:nth-of-type(2)) {display:none;}
+
+		footer {width:100%; height:300px;}
+		footer > #footer_top {width:100%; height:50px; background-color:#353f67}
+		footer > #footer_top > .contents_box > ul {width:100%; height:100%; line-height:50px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;}
+		footer > #footer_top > .contents_box > ul > li > a {display:block; font-size:14px; color:#fff;}
+
+		footer > #footer_bot {width:100%; height:250px; background-color:#f2f2f2;}
+		footer > #footer_bot > .contents_box {display:flex; flex-flow:row wrap; justify-content:space-between; align-content:center;}
+		footer > #footer_bot > .contents_box > #footer_logo {width:100%; height:25%;}
+		footer > #footer_bot > .contents_box > #footer_logo > img {width:auto; height:60%; margin:20px 0px;}
+		footer > #footer_bot > .contents_box > #footer_bot_left {width:50%; height:75%; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start; padding:30px 0px;}
+		footer > #footer_bot > .contents_box > #footer_bot_left > span {font-size:13px; color:#666;}
+		footer > #footer_bot > .contents_box > #footer_bot_left > span > a {color:#666;}
+		footer > #footer_bot > .contents_box > #footer_bot_left > span > a:hover {text-decoration:underline; font-weight:bold;}
+		footer > #footer_bot > .contents_box > #footer_bot_left > span:last-of-type {color:#000; font-weight:bold; margin:10px 0 0px;}
+
+
+		footer > #footer_bot > .contents_box > #footer_bot_right {width:50%; height:75%; display:flex; flex-direction:column; justify-content:space-around; align-items:flex-start; padding:30px 0px;}
+		footer > #footer_bot > .contents_box > #footer_bot_right > span {font-size:12px; color:#666;}
+		footer > #footer_bot > .contents_box > #footer_bot_right > span > a {color:#666;}
+		footer > #footer_bot > .contents_box > #footer_bot_right > span > a:hover {text-decoration:underline; font-weight:bold;}
+
+	</style>
+	
+
+
+
+
+
+
+
+
+</head>
+<body>
+	<div id="wrap">
+		<header>
+			<div id="header_banner">                
+				<span></span>
+				<img src="img/header_banner1.jpg" alt="banner">
+				<span><i class="fas fa-times" id="header_remove_banner"></i></span> 
+			</div>
+			<div id="header_util">
+				<div class="contents_box">
+					<ul id="header_util_nav">
+						<li><a href="#">매장안내<i class="fas fa-chevron-down"></i></a>
+							<ul id="header_util_nav_store">
+								<li><span>서울</span>
+									<ul>
+										<li><a href="#">광화문점</a></li>
+										<li><a href="#">강남점</a></li>
+										<li><a href="#">동대문 바로드림센터</a></li>
+										<li><a href="#">다큐브시티 바로드림센터</a></li>
+										<li><a href="#">목동점</a></li>
+										<li><a href="#">서울대 교내서점</a></li>
+										<li><a href="#">수유 바로드림센터</a></li>
+										<li><a href="#">영등포점</a></li>
+										<li><a href="#">은평 바로드림센터</a></li>
+										<li><a href="#">이화여대 교내서점</a></li>
+									</ul>
+								</li>
+								<li><span>수도권</span>
+									<ul>
+										<li><a href="#">광교점</a></li>
+										<li><a href="#">광교 월드스퀘어센터</a></li>
+										<li><a href="#">부천점</a></li>
+										<li><a href="#">분당점</a></li>
+										<li><a href="#">성균관대 교내서점</a></li>
+										<li><a href="#">인천점</a></li>                                  
+									</ul>
+								</li>
+								<li><span>지방</span>
+									<ul>
+										<li><a href="#">광주상무 센터</a></li>
+										<li><a href="#">대구점</a></li>
+										<li><a href="#">대전점</a></li>
+										<li><a href="#">반월당 바로드림센터</a></li>
+										<li><a href="#">부산점</a></li>
+										<li><a href="#">세종 바로드림센터</a></li>
+										<li><a href="#">센텀시티점</a></li>
+										<li><a href="#">울산점</a></li>
+										<li><a href="#">전북대 교내서점</a></li>
+										<li><a href="#">창원점</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#">회원혜택<i class="fas fa-chevron-down"></i></a>
+							<ul id="header_util_nav_benefit">
+								<li><a href="#">교보북클럽</a></li>
+								<li><a href="#">등급별 회원혜택</a></li>
+								<li><a href="#">신규회원 혜택</a></li>
+								<li><a href="#">제휴포인트/상품권</a></li>
+								<li><a href="#">참좋은교보문고</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul id="header_util_main">
+						<li><a href="#">로그인</a></li>
+						<li><a href="#">회원가입</a></li>
+						<li><a href="#">출석체크</a></li>
+						<li><a href="#">고객센터</a></li>
+						<li><a href="#">주문배송</a></li>
+						<li><a href="#"><i class="fas fa-shopping-cart"><span>0</span></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="header_search">
+				<div class="contents_box">
+					<div id="header_search_logo">
+						<a href="#"><img src="img/logo1.png" alt="logo"></a>
+					</div>
+					<div id="header_search_box">
+						<input id="header_search_input" type="text" placeholder="우리아이 이제 5개국어 가능합니다.">
+						<img src="img/header_search_btn.gif" alt="button">
+					</div>
+					<div id="header_search_ad">
+						<img src="img/header_search_ad1.jpg" alt="advertising">
+						<img src="img/header_search_ad2.jpg" alt="advertising">
+						<img src="img/header_search_ad3.jpg" alt="advertising">
+						<img src="img/header_search_ad4.jpg" alt="advertising">
+						<i class="fas fa-caret-right"></i>
+						<i class="fas fa-caret-left"></i>                                       
+						<span>1/4</span>                        
+					</div>
+				</div>
+			</div>
+			<nav>
+				<div class="contents_box">
+					<ul id="header_nav_main">
+						<li><i class="fas fa-bars"></i></li>
+						<li><a href="./sub.html">국내도서</a></li>
+						<li><a href="./sub.html">외국도서</a></li>
+						<li class="header_nav_main_sub"><a href="#">eBook<i class="fas fa-chevron-down"></i><i class="fas fa-chevron-up"></i></a>
+							<ul class="header_nav_main_submenu">
+								<li><a href="./sub.html./sub.html">일반도서</a></li>
+								<li><a href="./sub.html">로맨스/BL</a></li>
+								<li><a href="./sub.html">판타지/무협</a></li>
+								<li><a href="./sub.html">sam</a></li>
+								<li><a href="./sub.html">코믹스</a></li>
+								<li><a href="./sub.html">오디오북</a></li>
+								<li><a href="./sub.html">학술논문</a></li>
+							</ul>
+						</li>
+						<li><a href="./sub.html">웹소설</a></li>
+						<li class="header_nav_main_sub"><a href="#">기프트<i class="fas fa-chevron-down"></i><i class="fas fa-chevron-up"></i></a>
+							<ul class="header_nav_main_submenu">
+								<li><a href="./sub.html">디자인문구</a></li>
+								<li><a href="./sub.html">디지털</a></li>
+								<li><a href="./sub.html">키친/푸드</a></li>
+								<li><a href="./sub.html">오피스</a></li>
+								<li><a href="./sub.html">고급필기구</a></li>
+							</ul>
+						</li>
+						<li class="header_nav_main_sub"><a href="./sub.html">음반<i class="fas fa-chevron-down"></i><i class="fas fa-chevron-up"></i></a>
+							<ul class="header_nav_main_submenu">
+								<li><a href="./sub.html./sub.html">음반</a></li>
+								<li><a href="./sub.html">DVD</a></li>
+								<li><a href="./sub.html">블루레이</a></li>
+							</ul>
+						</li>
+						<li><a href="./sub.html">중고장터</a></li>
+						<li class="header_nav_main_sub"><a href="#"><i class="far fa-plus-square"></i></a>
+							<ul class="header_nav_main_submenu">
+								<li><a href="./sub.html">북캐스트</a></li>
+								<li><a href="./sub.html">북뉴스</a></li>
+								<li><a href="./sub.html">북로그</a></li>
+								<li><a href="./sub.html">북모닝</a></li>
+								<li><a href="./sub.html">문화행사</a></li>
+								<li><a href="./sub.html">스토리</a></li>
+								<li><a href="./sub.html">개인출판</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul id="header_nav_main_toggle">
+						<li id="header_nav_main_toggle_hide"><i class="fas fa-times"></i>
+							<ul>
+								<li>국내도서
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu1">
+												<h6>| 국내도서</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">소설</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">시/에세이</a></li>
+													<li><a href="#">경제/경영</a></li>
+													<li><a href="#">자기계발</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">인문</a></li>
+													<li><a href="#">역사/문화</a></li>
+													<li><a href="#">종교</a></li>
+													<li><a href="#">정치/사회</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">예술/대중문화</a></li>
+													<li><a href="#">과학</a></li>
+													<li><a href="#">기술/공학</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">컴퓨터/IT</a></li>
+												</ul>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">유아(0~7세)</a></li>
+													<li><a href="#">어린이(초등)</a></li>
+													<li><a href="#">어린이전집</a></li>
+													<li><a href="#">어린이영어</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">청소년</a></li>
+													<li><a href="#">초등참고서</a></li>
+													<li><a href="#">중/고등참고서</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">대학교재</a></li>
+													<li><a href="#">방송통신대교재</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">취업/수험서</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">외국어</a></li>
+												</ul>
+												<ul>
+													<li><a href="#">가정/육아</a></li>
+													<li><a href="#">건강</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">여행</a></li>
+													<li><a href="#">요리</a></li>
+													<li><a href="#">취미/실용/스포츠</a></li>
+													<li><a href="#">잡지</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">만화</a></li>
+													<li><a href="#">한국소개도서</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">오늘의 책<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">문장수집<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">월간 생활책방</a></li>
+													<li><a href="#">정가인하</a></li>
+													<li><a href="#">특가도서</a></li>
+													<li><a href="#">추천도서</a></li>
+													<li><a href="#">이럴 땐 이런 책<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">작가&작품</a></li>
+													<li><a href="#">웰페이퍼</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>외국도서
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu1">
+												<h6>| 외국도서</h6>
+												<ul>
+													<li><a href="#">서양도서</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">문학</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">인문/사회</a></li>
+													<li><a href="#">경제/경영</a></li>
+													<li><a href="#">과학/기술</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">취미/실용/여행<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">ELT/어학/사전</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">교재<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">생활/요리/건강</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">예술/건출</a></li>
+												</ul>
+												<ul>
+													<li><a href="#">어린이영어</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">유아영어</a></li>
+													<li><a href="#">영역별영어학습</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">코스북</a></li>
+													<li><a href="#">영어동화/그림책</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">어린이중국어</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">어린이일본어</a></li>
+													<li><a href="#">미국교과서</a></li>
+												</ul>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">일본도서<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">잡지</a></li>
+													<li><a href="#">실용서/예술</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">만화/애니<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">문학</a></li>
+													<li><a href="#">문고</a></li>
+													<li><a href="#">라이트노벨</a></li>
+													<li><a href="#">어학/학습</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">엔터테인먼트<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">아동</a></li>
+													<li><a href="#">인문/사회</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">자연/기술과학</a></li>
+													<li><a href="#">신서</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">베스트셀러</a></li>
+													<li><a href="#">신상품</a></li>
+													<li><a href="#">일본신간잡지</a></li>
+													<li><a href="#">일본잡지 정기구독</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>eBook
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu1">
+												<h6>| eBook</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">소설</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">시/에세이</a></li>
+													<li><a href="#">경제/경영</a></li>
+													<li><a href="#">자기계발</a></li>
+													<li><a href="#">인문</a></li>
+													<li><a href="#">국어/외국어</a></li>
+													<li><a href="#">역사/풍속/신화</a></li>
+													<li><a href="#">사회/정치/법</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">가정/생활/요리<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">여행/취미</a></li>
+													<li><a href="#">건강/의학</a></li>
+													<li><a href="#">종교/역학</a></li>
+												</ul>
+												<ul>
+													<li><a href="#">장르소설</a></li>
+													<li><a href="#">외국도서</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">코믹스</a></li>
+													<li><a href="#">아동</a></li>
+													<li><a href="#">유아</a></li>
+													<li><a href="#">예술/대중문화</a></li>
+													<li><a href="#">교재/수험서</a></li>
+													<li><a href="#">청소년교양</a></li>
+													<li><a href="#">자연과학/공학</a></li>
+													<li><a href="#">컴퓨터인터넷</a></li>
+													<li><a href="#">매거진</a></li>
+												</ul>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">베스트</a></li>
+													<li><a href="#">신간</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">무료<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">추천</a></li>
+													<li><a href="#">대여</a></li>
+													<li><a href="#">이벤트</a></li>
+													<li><a href="#">쿠폰</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">오늘의 책</a></li>
+													<li><a href="#">문장수집</a></li>
+													<li><a href="#">월간 생활책방</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">정가인하<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">특가도서</a></li>
+													<li><a href="#">추천도서</a></li>
+													<li><a href="#">이럴 땐 이런 책</a></li>
+													<li><a href="#">작가&작품</a></li>
+													<li><a href="#">웰페이퍼</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>코믹스
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 장르</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">로맨스</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">판타지<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">무협</a></li>
+													<li><a href="#">라이트노벨</a></li>
+													<li><a href="#">BL</a></li>
+													<li><a href="#">이벤트</a></li>
+													<li><a href="#">쿠폰</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 코믹스</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">연재</a></li>
+													<li><a href="#">고화질만화</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">무료만화</a></li>
+													<li><a href="#">교양만화</a></li>
+													<li><a href="#">순정만화</a></li>
+													<li><a href="#">학원만화</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">드라마<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">성인만화</a></li>
+													<li><a href="#">이벤트</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">쿠폰<span class="header_nav_main_toggle_new">N</span></a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">오늘의 책<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">문장수집<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">월간 생활책방</a></li>
+													<li><a href="#">정가인하</a></li>
+													<li><a href="#">특가도서</a></li>
+													<li><a href="#">추천도서</a></li>
+													<li><a href="#">이럴 땐 이런 책</a></li>
+													<li><a href="#">작가&작품</a></li>
+													<li><a href="#">웰페이퍼</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>sam
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| sam</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">sam</a></li>
+													<li><a href="#">sam베이직</a></li>
+													<li><a href="#">sam무제한</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">베스트</a></li>
+													<li><a href="#">신간</a></li>
+													<li><a href="#">추천</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| sam 이용안내</h6>
+												<ul>
+													<li><a href="#">sam베이직 이용안내</a></li>
+													<li><a href="#">sam무제한 이용안내</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">sam베이직이용권 구매</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">sam무제한이용권 구매</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>기프트
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 기프트</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">고급필기구</a></li>
+													<li><a href="#">오피스</a></li>
+													<li><a href="#">리빙/생활가전</a></li>
+													<li><a href="#">키친/푸드</a></li>
+													<li><a href="#">가구/수납</a></li>
+													<li><a href="#">뷰티/헬스</a></li>
+													<li><a href="#">패션잡화</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">여행/자동차</a></li>
+													<li><a href="#">취미/펫</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">유아동</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 디지털</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">USB/메모리/외장하드</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">USB선풍기/소형가전</a></li>
+													<li><a href="#">애플케이스/보호필름</a></li>
+													<li><a href="#">스마트 주변기기</a></li>
+													<li><a href="#">블루투스/헤드폰/이어폰</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">오늘의 핫딜</a></li>
+													<li><a href="#">베스트</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">이벤트</a></li>
+													<li><a href="#">기프트 카드</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>음반
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 음반</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">가요</a></li>
+													<li><a href="#">클래식</a></li>
+													<li><a href="#">팝</a></li>
+													<li><a href="#">락</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">재즈<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">O.S.T/뮤지컬</a></li>
+													<li><a href="#">일본음악</a></li>
+													<li><a href="#">유아/아동</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| DVD</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">블루레이</a></li>
+													<li><a href="#">드라마/로맨스</a></li>
+													<li><a href="#">애니메이션</a></li>
+													<li><a href="#">MUSIC BLU-RAY</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#">에약음반</a></li>
+													<li><a href="#">예약 BLU-RAY/DVD</a></li>
+													<li><a href="#">새로나온음반</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>중고장터
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 중고장터</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">중고도서<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">소설</a></li>
+													<li><a href="#">시/에세이</a></li>
+													<li><a href="#">경제/경영</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">자기계발<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">인문</a></li>
+													<li><a href="#">정치/사회</a></li>
+													<li><a href="#">기술/공학</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">컴퓨터/IT<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">아동<span class="header_nav_main_toggle_new">N</span></a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#">판매자 페이지</a></li>
+													<li><a href="#">중고책 판매방법</a></li>
+													<li><a href="#">중고책 구매방법</a></li>
+													<li><a href="#">구매상품 배송조회</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">스마트 비교서비스</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>ONLY 교보문고
+									<div class="header_nav_main_toggle_wrap">
+										<div class="header_nav_main_toggle_box">
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 추천</h6>
+												<ul>
+													<li><a href="#" class="header_nav_main_toggle_red">오늘의 책<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">월간 생활책방</a></li>
+													<li><a href="#">이럴 땐 이런 책</a></li>
+													<li><a href="#">키위맘</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">추천도서<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">책 그리고 꽃<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">READ IT</a></li>
+													<li><a href="#">스팩비교</a></li>
+													<li><a href="#">월페이퍼</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 컨텐츠</h6>
+												<ul>
+													<li><a href="#">북캐스트</a></li>
+													<li><a href="#">북뉴스</a></li>
+													<li><a href="#">낭만서점</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">블로그<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">북모닝</a></li>
+												</ul>
+											</div>
+											<div class="header_nav_main_toggle_menu2">
+												<h6>| 스페셜코너</h6>
+												<ul>
+													<li><a href="#">문장수집</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">Klover 평점 좋은 책<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">시그니처향</a></li>
+													<li><a href="#">손글씨 폰트</a></li>
+													<li><a href="#">우리가 만드는 책</a></li>
+													<li><a href="#">K컬랙션</a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">문화행사<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#" class="header_nav_main_toggle_red">리딩트리<span class="header_nav_main_toggle_new">N</span></a></li>
+													<li><a href="#">대량구매 서비스</a></li>
+													<li><a href="#">문서검색</a></li>
+													<li><a href="#">정가인하</a></li>
+													<li><a href="#">특가도서</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li>메뉴 전체보기</li>
+						<li>서비스 전체보기<i class="fas fa-chevron-right"></i></li>
+					</ul>
+					<ul id="header_nav_sub">
+						<li><a href="#">베스트</a></li>
+						<li><a href="#">신상품</a></li>
+						<li><a href="#">이벤트</a></li>
+						<li><a href="#">사은품</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div id="slider">
+			<div class="contents_box">
+				<div id="slider_main">
+					<div class="slider_main_1box">
+						<img src="img/slider1.jpg" alt="slideImage">
+					</div>
+					<div class="slider_main_1box">
+						<img src="img/slider2.jpg" alt="slideImage">
+					</div>
+					<div class="slider_main_1box">
+						<img src="img/slider3.jpg" alt="slideImage">
+					</div>
+					<div class="slider_main_3box">
+						<img src="img/slider4_1.jpg" alt="slideImage">
+						<img src="img/slider4_2.jpg" alt="slideImage">
+						<img src="img/slider4_3.jpg" alt="slideImage">
+					</div>                    
+					<div class="slider_main_1box">
+						<img src="img/slider5.jpg" alt="slideImage">
+					</div>
+					<div class="slider_main_3box">
+						<img src="img/slider6_1.jpg" alt="slideImage">
+						<img src="img/slider6_2.jpg" alt="slideImage">
+						<img src="img/slider6_3.jpg" alt="slideImage">
+					</div>
+				</div>
+				<div id="slider_side">
+					<div id="slider_side_top">
+						<h5>출판사 북캐스트</h5>
+						<span>거의 모든, 책 이야기</span>
+						<div id="slider_side_img">
+							
+						</div>
+						<p>한가함을 참지 못하는 습관</p>
+						<p>바쁨 중독에서 벗어나는 방법</p>
+					</div>
+					<div id="slider_side_bot">
+						<ul>
+							<li><a href="#">외국인 질색하는 한국기업문화</a></li>
+							<li><a href="#">아내의 눈물을 멈추게 만든</a></li>
+							<li><a href="#">인간의 지능은 어디로 갈 것인가</a></li>
+							<li><a href="#">미니멀 라이프가 어려워요?</a></li>
+						</ul>
+					</div>
+				</div>            
+				<div id="slider_btn">
+					<ul>
+						<li class="slider_btn_hover">요즘 이 책</li>
+						<li>핫이슈</li>
+						<li>새로나온 책</li>
+						<li>기획/테마</li>
+						<li>eBook</li>
+						<li>한정특가</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<section>
+			<div id="today">
+				<div class="contents_box">
+					<div id="today_contents">
+						<div class="contents_title">
+							<h2>오늘의 책</h2>
+							<ul>                                
+								<li>국내도서</li>
+								<li>eBook</li>
+								<li>sam</li>
+							</ul>
+							<i class="far fa-plus-square"></i>
+						</div>
+						<div id="today_bookbox_wrap">
+							<div class="today_bookbox">
+								<div class="today_bookbox_img">
+									<img src="img/today_bookbox1-1.jpg" class="today_bookbox_img_type1" alt="book">
+									<img src="img/today_bookbox1-2.jpg" class="today_bookbox_img_type2" alt="book">
+									<img src="img/today_bookbox1-3.jpg" class="today_bookbox_img_type3" alt="book">
+									<ul class="today_bookbox_img_btn">
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+								</div>
+								<div class="today_bookbox_introbox">
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox1-1_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox1-1_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox1-1_intro3.jpg" alt="introduce">
+										<img src="img/today_bookbox1-1_intro4.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>확신(양장본 HardCover)<span>롭 무어 | 다산북스</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/4</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox1-2_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox1-2_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox1-2_intro3.jpg" alt="introduce">
+										<img src="img/today_bookbox1-2_intro4.jpg" alt="introduce">
+										<img src="img/today_bookbox1-2_intro5.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>끝내주는 맞춤법: 쓰는 사람을 위한 반복의 힘<span>김정선 | 유유</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/5</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox1-3_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox1-3_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox1-3_intro3.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>생태적 전환, 슬기로운 지구 생활을 위하여(...<span>최재천 | 김영사</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>                                                                        
+								</div>
+
+							</div>
+							<div class="today_bookbox">
+								<div class="today_bookbox_img">
+									<img src="img/today_bookbox2-1.jpg" class="today_bookbox_img_type1" alt="book">
+									<img src="img/today_bookbox2-2.jpg" class="today_bookbox_img_type2" alt="book">
+									<img src="img/today_bookbox2-3.jpg" class="today_bookbox_img_type3" alt="book">
+									<ul class="today_bookbox_img_btn">
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+								</div>
+								<div class="today_bookbox_introbox">
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox2-1_intro1.png" alt="introduce">
+										<img src="img/today_bookbox2-1_intro2.png" alt="introduce">
+										<img src="img/today_bookbox2-1_intro3.png" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>사장을 위한 명문장 260<span>시란 유 | 센시오</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox2-2_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox2-2_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox2-2_intro3.jpg" alt="introduce">
+										<img src="img/today_bookbox2-2_intro4.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>잘 팔리는 브랜드의 법칙)<span>구자영 | 더퀘스트</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/4</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox2-3_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox2-3_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox2-3_intro3.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>바퀴의 이동<span>존 로산트 | 소소의책</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>                                    
+								</div>
+							</div>
+							<div class="today_bookbox">
+								<div class="today_bookbox_img">
+									<img src="img/today_bookbox3-1.jpg" class="today_bookbox_img_type1" alt="book">
+									<img src="img/today_bookbox3-2.jpg" class="today_bookbox_img_type2" alt="book">
+									<img src="img/today_bookbox3-3.jpg" class="today_bookbox_img_type3" alt="book">
+									<ul class="today_bookbox_img_btn">
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+								</div>
+								<div class="today_bookbox_introbox">
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox3-1_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox3-1_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox3-1_intro3.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>리얼 입체 종이접기<span>가와하타 후미아키 | 티나</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>                                        
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox3-2_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox3-2_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox3-2_intro3.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>서른의 규칙<span>수정 | 센세이션</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="today_bookbox_intro">
+										<img src="img/today_bookbox3-3_intro1.jpg" alt="introduce">
+										<img src="img/today_bookbox3-3_intro2.jpg" alt="introduce">
+										<img src="img/today_bookbox3-3_intro3.jpg" alt="introduce">
+										<span class="today_bookbox_introbox_prev"><i class="fas fa-chevron-left"></i></span>
+										<span class="today_bookbox_introbox_next"><i class="fas fa-chevron-right"></i></span>
+										<div class="today_bookbox_subtitle">
+											<div>
+												<span>독재자가 되는 법<span>프랑크 디쾨터 | 열린책들</span></span>
+												<span>
+													<i class="fas fa-caret-left today_bookbox_subtitle_prev"></i>
+													<span class="today_bookbox_subtitle_count">1/3</span>
+													<i class="fas fa-caret-right today_bookbox_subtitle_next"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="today_ad">
+						<div id="today_ad_top">
+							<img src="img/today_ad_top.jpg" alt="AD">
+						</div>
+						<div id="today_ad_bot">
+							<img src="img/today_ad_bot.jpg" alt="AD">
+						</div>
+					</div>
+					<div id="side_menu">
+						<div class="side_menu_img">
+							<img src="img/side_menu1.jpg" alt="AD">
+						</div>
+						<div class="side_menu_img">
+							<img src="img/side_menu2.jpg" alt="AD">
+						</div>
+						<div class="side_menu_img">
+							<img src="img/side_menu3.jpg" alt="AD">
+						</div>
+						<div class="side_menu_img">
+							<img src="img/side_menu4.jpg" alt="AD">
+						</div>
+						<i class="fab fa-facebook"></i>
+					</div>
+				</div>
+			</div>
+			<div id="new">
+				<div class="contents_box">
+					<div class="contents_title">
+						<h2>화제의 신간</h2>
+						<ul>                            
+							<li>국내도서</li>
+							<li>외국도서</li>
+							<li>eBook</li>
+							<li>sam</li>
+							<li>음반/기프트</li>
+						</ul>
+						<i class="far fa-plus-square"></i>
+					</div>
+					<div class="new_contents_wrap">
+						<div class="new_contents_box new_domestic">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_domestic">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_domestic">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<span class="new_contents_prev"><i class="fas fa-chevron-left"></i></span>
+						<span class="new_contents_next"><i class="fas fa-chevron-right"></i></span>
+					</div>
+					<div class="new_contents_wrap">
+						<div class="new_contents_box new_overseas">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_overseas">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_overseas">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<span class="new_contents_prev"><i class="fas fa-chevron-left"></i></span>
+						<span class="new_contents_next"><i class="fas fa-chevron-right"></i></span>
+					</div>
+					<div class="new_contents_wrap">
+						<div class="new_contents_box new_e-book">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_e-book">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_e-book">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<span class="new_contents_prev"><i class="fas fa-chevron-left"></i></span>
+						<span class="new_contents_next"><i class="fas fa-chevron-right"></i></span>
+					</div>                    
+					<div class="new_contents_wrap">
+						<div class="new_contents_box new_sam">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_sam">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_sam">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<span class="new_contents_prev"><i class="fas fa-chevron-left"></i></span>
+						<span class="new_contents_next"><i class="fas fa-chevron-right"></i></span>
+					</div>
+					<div class="new_contents_wrap">
+						<div class="new_contents_box new_music">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_music">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<div class="new_contents_box new_music">
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+							<div class="new_contents_bookbox"></div>
+						</div>
+						<span class="new_contents_prev"><i class="fas fa-chevron-left"></i></span>
+						<span class="new_contents_next"><i class="fas fa-chevron-right"></i></span>
+					</div>
+				</div>
+			</div>
+			<div id="only">
+				<div class="contents_box">
+					<div id="only_logo">
+						<img src="img/only_logo.gif" alt="logo">
+					</div>
+					<div id="only_icon_wrap">
+						<div class="only_icon">
+							<div class="only_iconbox">
+								<img src="img/only_icon1.gif" alt="icon">
+								<img src="img/only_icon2.gif" alt="icon">
+								<img src="img/only_icon3.gif" alt="icon">
+								<img src="img/only_icon4.gif" alt="icon">
+								<img src="img/only_icon5.gif" alt="icon">
+								<img src="img/only_icon6.gif" alt="icon">
+							</div>
+							<div class="only_iconbox">
+								<img src="img/only_icon7.gif" alt="icon">
+								<img src="img/only_icon8.gif" alt="icon">
+								<img src="img/only_icon9.gif" alt="icon">
+								<img src="img/only_icon10.gif" alt="icon">
+								<img src="img/only_icon11.gif" alt="icon">
+								<img src="img/only_icon12.gif" alt="icon">
+							</div>
+							<div class="only_iconbox">
+								<img src="img/only_icon13.gif" alt="icon">
+								<img src="img/only_icon14.gif" alt="icon">
+								<img src="img/only_icon15.gif" alt="icon">
+								<img src="img/only_icon16.gif" alt="icon">
+								<img src="img/only_icon17.gif" alt="icon">
+								<img src="img/only_icon18.gif" alt="icon">
+							</div>
+							<div class="only_iconbox">
+								<img src="img/only_icon19.gif" alt="icon">
+								<img src="img/only_icon20.gif" alt="icon">
+								<img src="img/only_icon21.gif" alt="icon">
+								<img src="img/only_icon22.gif" alt="icon">
+								<img src="img/only_icon23.gif" alt="icon">
+								<img src="img/only_icon24.gif" alt="icon">
+							</div>
+							<div class="only_iconbox">
+								<img src="img/only_icon25.gif" alt="icon">
+								<img src="img/only_icon26.gif" alt="icon">
+								<img src="img/only_icon27.gif" alt="icon">
+								<img src="img/only_icon28.gif" alt="icon">
+								<img src="img/only_icon29.gif" alt="icon">
+								<img src="img/only_icon30.gif" alt="icon">
+							</div>
+						</div>
+						<i id="only_prev" class="fas fa-chevron-left"></i>
+						<i id="only_next" class="fas fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+			<div id="section_banner">
+				<div class="contents_box">
+					<img src="img/banner_title.gif" alt="logo">
+					<div id="banner_ad_wrap">
+						<div id="banner_ad">
+							<img src="img/banner_ad1.jpg" alt="AD">
+							<img src="img/banner_ad2.jpg" alt="AD">
+							<img src="img/banner_ad3.jpg" alt="AD">
+							<img src="img/banner_ad4.jpg" alt="AD">
+						</div>
+						<i id="banner_prev" class="fas fa-chevron-left"></i>
+						<i id="banner_next" class="fas fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+			<div id="story">
+				<div class="contents_box">
+					<h2>스토리 :K</h2>
+					<div class="story_contents">
+						<div class="story_imgbox">
+							<img src="img/story1.jpg" alt="girl">
+							<div class="story_textbox">
+								<span>북캐스트</span>
+							</div>
+						</div>
+						<span>한가함을 참지 못하는 습관</span>
+						<span>바쁨 중독에서 벗어나는 방법</span>
+					</div>
+					<div class="story_contents">
+						<div class="story_imgbox">
+							<img src="img/story2.jpg" alt="girl">
+							<div class="story_textbox">
+								<span>북캐스트</span>
+							</div>
+						</div>
+						<span>외국인이 질색하는 기업문화</span>
+						<span>'나'로 살기와 외롭지 않기</span>
+					</div>
+					<div class="story_contents">
+						<div class="story_imgbox">
+							<img src="img/story3.jpg" alt="girl">
+							<div class="story_textbox">
+								<span>북캐스트</span>
+							</div>                        
+						</div>
+						<span>아내의 눈물을 멈추게 만든</span>
+						<span>시한부 남편의 한마디</span>
+					</div>
+					<div class="story_contents">
+						<div class="story_imgbox">
+							<img src="img/story4.jpg" alt="girl">
+							<div class="story_textbox">
+								<span>북캐스트</span>
+							</div>                        
+						</div>
+						<span>미니멀 라이프가 어려워요?</span>
+						<span>당신에게 비움을 선물합니다</span>
+					</div>
+				</div>
+			</div>
+			<div id="best">
+				<div class="contents_box">
+					<div id="best_main">
+						<div class="contents_title">
+							<h2>베스트셀러</h2>
+							<ul>                                
+								<li>교보문고종합</li>
+								<li>인터넷일간</li>
+								<li>외국도서</li>
+								<li>eBook</li>
+								<li>오디오북</li>
+								<li>sam</li>
+							</ul>
+							<i class="far fa-plus-square"></i>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_total">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_internet">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_overseas">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_e-book">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_audio">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+						<div class="best_main_book_wrap">
+							<div class="best_main_book best_sam">
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+								<div class="best_main_bookbox"></div>
+							</div>
+						</div>
+					</div>
+					<div id="best_side">
+						<ul>
+							<li class="best_side_hover">북튜버의 책방</li>  
+							<li>추천 eBook</li> 
+						</ul>
+						<div class="best_side_wrap">
+							<div>
+								<div class="best_side_top">
+									<img src="img/best_side1_top.jpg" alt="video">
+									<span><a href="#">[북튜버의 책방]</a></span>
+									<span>6분 클래식, 경상도ver 어린 왕자</span>
+								</div>
+								<span class="best_side_bar"></span>
+								<div class="best_side_bot">
+									<img src="img/best_side1_bot.jpg" alt="book">
+									<h6><a href="#">애린 왕자</a></h6>
+								</div>
+							</div>
+						</div>
+						<div class="best_side_wrap">
+							<div>
+								<div class="best_side_top">
+									<img src="img/best_side2_top.jpg" alt="book">
+									<h6><a href="#">엄마의 주식 공부</a></h6>
+								</div>
+								<span class="best_side_bar"></span>
+								<div class="best_side_bot">
+									<img src="img/best_side2_bot.jpg" alt="book">
+									<h6><a href="#">세인트 영멘. 1</a></h6>
+								</div>
+							</div>
+						</div>             
+					</div>
+				</div>
+			</div>
+			<div id="recom">
+				<div class="contents_box">
+					<h2>클릭! 실시간 추천</h2>
+					<div id="recom_main">
+						<h3>최근 본 상품</h3>
+						<div></div>
+					</div>
+					<div id="recom_other">
+						<h3>추천 상품</h3>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+				</div>
+			</div>
+			<div id="other">
+				<div class="contents_box">
+					<div id="other_title">
+						<h2>감성메이커</h2>
+						<ul>
+							<li class="other_hover"></li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+					<div class="other_product_wrap">
+						<div class="other_product">
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other1.jpg" alt="AD">
+									<span>책 읽는 당신의 라이프스타일을 위해!</span>
+								</div>
+								<span>[기프트] <span>아라아라 가죽 북커버 시리즈 5가지 사이즈</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other2.jpg" alt="AD">
+									<span>9,900원 초특가!</span>
+								</div>
+								<span>[기프트] <span>[초특가] 차량용 고속 무선충전 거치대 올인원 G1</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other3.jpg" alt="AD">
+									<span>이젠 당당하게 고개 들어요!</span>
+								</div>
+								<span>[기프트] <span>엑토 노트북 사이드 듀얼스크린 핸드폰 거치대 MST-43</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other4.jpg" alt="AD">
+									<span>감각적인 디자인, 혁신적인 쿡웨어</span>
+								</div>
+								<span>[기프트] <span>플랜잇 커피머신 홈카페프레소 노르딕 PCM-NF15</span></span>
+							</div>
+						</div>
+					</div>          
+					<div class="other_product_wrap">
+						<div class="other_product">
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other5.jpg" alt="AD">
+									<span>ROMANTIC DREAM</span>
+								</div>
+								<span>[음반] <span>ROMANTIC DREAM [낭만의 꿈] [핫트랙스 단독음반]</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other6.jpg" alt="AD">
+									<span>도깨비 PACK 2</span>
+								</div>
+								<span>[음반] <span>도깨비 PACK 2 [TVN 10주년 특별기획 드라마]</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other7.jpg" alt="AD">
+									<span>잃어버린 시간 [미니 3집]</span>
+								</div>
+								<span>[음반] <span>잃어버린 시간 [미니 3집]</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other8.jpg" alt="AD">
+									<span>THE RENAISSANCE</span>
+								</div>
+								<span>[음반] <span>THE RENAISSANCE [SQUARE STYLE] [정규 10집]</span></span>
+							</div>
+						</div>
+					</div>            
+					<div class="other_product_wrap">
+						<div class="other_product">
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other9.jpg" alt="AD">
+									<span>부산행 X 서울역 [스틸북 A 한정판]</span>
+								</div>
+								<span><span>부산행 X 서울역 [스틸북 A 한정판]</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other10.jpg" alt="AD">
+									<span>뷰티풀 마인드</span>
+								</div>
+								<span><span>뷰티풀 마인드 [슬립케이스 넘버링 한정판] [A BEAUTIFUL MIND]</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other11.jpg" alt="AD">
+									<span>시동</span>
+								</div>
+								<span><span>시동</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other12.jpg" alt="AD">
+									<span>검객[한정판]</span>
+								</div>
+								<span><span>검객[한정판]</span></span>
+							</div>
+						</div>
+					</div>  
+					<div class="other_product_wrap">
+						<div class="other_product">
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other13.jpg" alt="AD">
+									<span>꽃과 함께</span>
+								</div>
+								<span><span>책 그리고 꽃</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other14.jpg" alt="AD">
+									<span>교보문고 도서 패키지</span>
+								</div>
+								<span><span>한글 기프트백</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other15.jpg" alt="AD">
+									<span>책 읽는 당신의 라이프스타일을 위해!</span>
+								</div>
+								<span><span>교보문고 시그니처 향</span></span>
+							</div>
+							<div>
+								<div class="other_imgbox">
+									<img src="img/other16.jpg" alt="AD">
+									<span>DUCKOO 에디션</span>
+								</div>
+								<span><span>교보문고 아트토이북</span></span>
+							</div>
+						</div>
+					</div>  
+				</div>
+			</div>
+		</section>
+
+		<footer>           
+			<div id="footer_top">
+				<div class="contents_box">
+					<ul>
+						<li><a href="#">회사소개</a></li>
+						<li><a href="#">이용약관</a></li>
+						<li><a href="#">개인정보처리방침</a></li>
+						<li><a href="#">청소년보호정책</a></li>
+						<li><a href="#">고객센터</a></li>
+						<li><a href="#">협력사</a></li>
+						<li><a href="#">제휴</a></li>
+						<li><a href="#">광고문의</a></li>
+						<li><a href="#">채용정보</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="footer_bot">
+				<div class="contents_box">
+					<div id="footer_logo">
+						<img src="img/footer_logo.png" alt="logo">
+					</div>                    
+					<div id="footer_bot_left">                        
+						<span>㈜ 교보문고   서울시 종로구 종로 1   대표이사 : 박영규</span>
+						<span>사업자등록번호 : 102-81-11670</span>
+						<span><strong>대표전화 : 1544-1900 (발신자 부담전화)</strong> 팩스 : 0502-987-5711 (지역번호공통)</span>
+						<span>서울특별시 통신판매업신고번호 : 제 653호 ▶<a href="#">사업자정보확인</a></span>
+						<span>COPYRIGHT(C) KYOBO BOOK CENTRE ALL RIGHTS RESERVED.</span>
+					</div>
+					<div id="footer_bot_right">
+						<span>LG U+ 구매안전서비스   ▶<a href="#">서비스 가입 확인</a></span>
+						<span>고객님은 안전거래를 위해 현금 등으로 결제시 저희 쇼핑몰에서 가입한 LG유플러스의 구매안전서비스를 이용하실 수 있습니다.</span>
+						<span>[인증범위] 온라인 교보문고 서비스 운영</span>
+						<span>[유효기간] 2020.11.04. ~ 2023.11.03.</span>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+</body>
+</html>
